@@ -1,6 +1,7 @@
 package com.example.AlimentaAcaoAPP.Entities.DTOs;
 
 import com.example.AlimentaAcaoAPP.Entities.Enums.TipoUsuario;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.example.AlimentaAcaoAPP.Entities.Usuario;
 import jakarta.persistence.Column;
 
@@ -9,16 +10,22 @@ import java.util.Objects;
 
 public class UsuarioDTO {
 
+    @JsonProperty("nome")
     private String nome;
 
+    @JsonProperty("cpf")
     private String cpf;
 
+    @JsonProperty("senha")
     private String senha;
 
+    @JsonProperty("dataNascimento")
     private Date dataNascimento;
 
+    @JsonProperty("email")
     private String email;
 
+    @JsonProperty("tipoUsuario")
     private TipoUsuario tipoUsuario;
 
     public UsuarioDTO(){
