@@ -41,7 +41,7 @@ public class Usuario {
         this.senha = usuario.getSenha();
         this.dataNascimento = usuario.getDataNascimento();
         this.email = usuario.getEmail();
-        this.tipoUsuario = getTipoUsuario();
+        this.tipoUsuario = usuario.getTipoUsuario();
     }
 
     public Integer getId() {
