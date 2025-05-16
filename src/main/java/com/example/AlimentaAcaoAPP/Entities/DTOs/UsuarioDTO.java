@@ -16,7 +16,7 @@ public class UsuarioDTO {
     @JsonProperty("cpf")
     private String cpf;
 
-    @JsonProperty("senha")
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
 
     @JsonProperty("dataNascimento")
@@ -38,7 +38,7 @@ public class UsuarioDTO {
         this.senha = usuario.getSenha();
         this.dataNascimento = usuario.getDataNascimento();
         this.email = usuario.getEmail();
-        this.tipoUsuario = getTipoUsuario();
+        this.tipoUsuario = usuario.getTipoUsuario();
     }
 
     public String getNome() {

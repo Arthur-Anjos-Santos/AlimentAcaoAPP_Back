@@ -3,12 +3,18 @@ package com.example.AlimentaAcaoAPP.Entities;
 import com.example.AlimentaAcaoAPP.Entities.DTOs.UsuarioDTO;
 import com.example.AlimentaAcaoAPP.Entities.Enums.TipoUsuario;
 import jakarta.persistence.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
-public class Usuario {
+@Inheritance(strategy = InheritanceType.JOINED)
+public abstract  class Usuario implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -109,5 +115,22 @@ public class Usuario {
     @Override
     public int hashCode() {
         return Objects.hash(id, nome, cpf, senha, dataNascimento, email, tipoUsuario);
+    }
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if (this.tipoUsuario == TipoUsuario.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_BENEFICIARIO"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_BENEFICIARIO"));
+    }
+
+    @Override
+    public String getPassword() {
+        return this.senha;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.email;
     }
 }
