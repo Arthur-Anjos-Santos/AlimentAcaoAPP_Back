@@ -56,16 +56,18 @@ public class UsuarioService {
         repository.save(pessoa);
     }
 
-    public void atualizarRendaERedefinirBeneficio(Integer idUsuario, BigDecimal rendaPerCapita, boolean ehBeneficiario, int quantidadePessoas) {
+    public void atualizarRendaERedefinirBeneficio(Integer idUsuario, BigDecimal rendaPerCapita, boolean ehBeneficiario, int quantidadePessoas, BigDecimal rendaTotal) {
         Optional<Pessoa> optionalPessoa = repository.findById(idUsuario);
         if (optionalPessoa.isEmpty()) {
-            throw new RuntimeException("Usuário não encontradsssso.");
+            throw new RuntimeException("Usuário não encontrado.");
         }
 
         Pessoa pessoa = optionalPessoa.get();
         pessoa.setQuantidadePessoas(quantidadePessoas);
         pessoa.setValorRendaPercapita(rendaPerCapita);
         pessoa.setEhBeneficiario(ehBeneficiario);
+        pessoa.setRendaTotal(rendaTotal);
+        
 
         repository.save(pessoa);
     }

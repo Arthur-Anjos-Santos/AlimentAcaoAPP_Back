@@ -9,15 +9,17 @@ public class PessoaDTO {
     private UsuarioDTO usuario;
     private Integer quantidadePessoas;
     private EnderecoDTO endereco;
-    private Double rendaTotal;
+    private BigDecimal rendaTotal;
     private boolean ehBeneficiario;
 
     public PessoaDTO() {}
+
     public PessoaDTO(Pessoa pessoa) {
         this.usuario = new UsuarioDTO(pessoa);
         this.quantidadePessoas = pessoa.getQuantidadePessoas();
         this.rendaTotal = pessoa.getRendaTotal();
         this.endereco = new EnderecoDTO(pessoa.getEndereco());
+        this.ehBeneficiario = pessoa.isEhBeneficiario();
     }
 
     public UsuarioDTO getUsuario() {
@@ -36,11 +38,11 @@ public class PessoaDTO {
         this.quantidadePessoas = quantidadePessoas;
     }
 
-    public Double getRendaTotal() {
+    public BigDecimal getRendaTotal() {
         return rendaTotal;
     }
 
-    public void setRendaTotal(Double rendaTotal) {
+    public void setRendaTotal(BigDecimal rendaTotal) {
         this.rendaTotal = rendaTotal;
     }
 

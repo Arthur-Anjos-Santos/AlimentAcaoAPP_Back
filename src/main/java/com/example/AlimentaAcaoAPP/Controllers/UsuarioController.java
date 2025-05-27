@@ -2,7 +2,7 @@ package com.example.AlimentaAcaoAPP.Controllers;
 
 import com.example.AlimentaAcaoAPP.Entities.DTOs.PessoaDTO;
 import com.example.AlimentaAcaoAPP.Entities.DTOs.RendaDTO;
-import com.example.AlimentaAcaoAPP.Entities.DTOs.UsuarioDTO;
+import com.example.AlimentaAcaoAPP.Entities.DTOs.ResultadoBeneficioDTO;
 import com.example.AlimentaAcaoAPP.Services.DoacaoService;
 import com.example.AlimentaAcaoAPP.Services.UsuarioService;
 
@@ -15,9 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
+
 @RestController
 @RequestMapping("/usuario")
 public class UsuarioController {
@@ -25,10 +24,13 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    @Autowired
+    private DoacaoService doacaoService;
+
     @PreAuthorize("hasAnyRole('ADMIN','BENEFICIARIO')")
     @GetMapping
-    public ResponseEntity<List<PessoaDTO>> listaTodosUsuarios(){
-        return ResponseEntity.status(HttpStatus.CREATED).body(usuarioService.listaUsuarios());
+    public ResponseEntity<List<PessoaDTO>> listaTodosUsuarios() {
+        return ResponseEntity.status(HttpStatus.OK).body(usuarioService.listaUsuarios());
     }
 
     @PostMapping
@@ -38,20 +40,26 @@ public class UsuarioController {
     }
 
     @PreAuthorize("hasAnyRole('ADMIN','BENEFICIARIO')")
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<String> cadastrarRendaTotal(@PathVariable Integer id, @Valid @RequestBody RendaDTO rendaDTO) {
-        BigDecimal rendaPerCapita = rendaDTO.valorRendaTotal()
-            .divide(BigDecimal.valueOf(rendaDTO.quantidadePessoas()), 2, RoundingMode.HALF_UP);
+    @PutMapping("/{id}")
+    public ResponseEntity<ResultadoBeneficioDTO> cadastrarRendaTotal(
+            @PathVariable Integer id,
+            @Valid @RequestBody RendaDTO rendaDTO) {
 
-        boolean beneficiario = rendaPerCapita.compareTo(new BigDecimal("218.00")) <= 0;
+        DoacaoService.BeneficioRenda resultado = doacaoService.calcularBeneficioRenda(rendaDTO);
 
-        usuarioService.atualizarRendaERedefinirBeneficio(id, rendaPerCapita, beneficiario, rendaDTO.quantidadePessoas());
+        usuarioService.atualizarRendaERedefinirBeneficio(
+                id,
+                resultado.getRendaPerCapita(),
+                resultado.isBeneficiario(),
+                rendaDTO.quantidadePessoas(),
+                rendaDTO.valorRendaTotal()
+        );
 
-        if (beneficiario) {
-            return ResponseEntity.ok("Renda cadastrada. Usuário é um possível beneficiário.");
-        } else {
-            return ResponseEntity.ok("Renda cadastrada. Usuário não é elegível como beneficiário.");
-        }
+        ResultadoBeneficioDTO responseDTO = new ResultadoBeneficioDTO(
+                resultado.getRendaPerCapita(),
+                resultado.isBeneficiario()
+        );
+
+        return ResponseEntity.ok(responseDTO);
     }
 }
-

@@ -18,7 +18,7 @@ public class Pessoa extends Usuario {
     @Column (length = 120)
 
     private BigDecimal valorRendaPercapita;
-    private Double rendaTotal;
+    private BigDecimal rendaTotal;
     private Boolean ehBeneficiario;
 
     @ManyToOne
@@ -30,7 +30,10 @@ public class Pessoa extends Usuario {
         super(usuario);
         this.rendaTotal = pessoaDTO.getRendaTotal();
         this.endereco = new Endereco(pessoaDTO.getEndereco());
+        this.quantidadePessoas = pessoaDTO.getQuantidadePessoas();
+        this.ehBeneficiario = pessoaDTO.isEhBeneficiario();
     }
+
 
     public Pessoa() {
 
@@ -51,15 +54,15 @@ public class Pessoa extends Usuario {
         return valorRendaPercapita;
     }
 
-    public Double getRendaTotal() {
+    public BigDecimal getRendaTotal() {
         return rendaTotal;
     }
 
-    public void setRendaTotal(Double rendaTotal) {
+    public void setRendaTotal(BigDecimal rendaTotal) {
         this.rendaTotal = rendaTotal;
     }
 
-    public Boolean getEhBeneficiario() {
+    public Boolean isEhBeneficiario() {
         return ehBeneficiario;
     }
 
