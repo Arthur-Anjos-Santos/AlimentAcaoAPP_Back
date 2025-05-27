@@ -8,14 +8,15 @@ public class PessoaDTO {
 
     private UsuarioDTO usuario;
     private Integer quantidadePessoas;
-    private BigDecimal valorRendaPercapita;
     private EnderecoDTO endereco;
+    private Double rendaTotal;
+    private boolean ehBeneficiario;
 
     public PessoaDTO() {}
     public PessoaDTO(Pessoa pessoa) {
         this.usuario = new UsuarioDTO(pessoa);
         this.quantidadePessoas = pessoa.getQuantidadePessoas();
-        this.valorRendaPercapita = pessoa.getValorRendaPercapita();
+        this.rendaTotal = pessoa.getRendaTotal();
         this.endereco = new EnderecoDTO(pessoa.getEndereco());
     }
 
@@ -35,12 +36,20 @@ public class PessoaDTO {
         this.quantidadePessoas = quantidadePessoas;
     }
 
-    public BigDecimal getValorRendaPercapita() {
-        return valorRendaPercapita;
+    public Double getRendaTotal() {
+        return rendaTotal;
     }
 
-    public void setValorRendaPercapita(BigDecimal valorRendaPercapita) {
-        this.valorRendaPercapita = valorRendaPercapita;
+    public void setRendaTotal(Double rendaTotal) {
+        this.rendaTotal = rendaTotal;
+    }
+
+    public boolean isEhBeneficiario() {
+        return ehBeneficiario;
+    }
+
+    public void setEhBeneficiario(boolean ehBeneficiario) {
+        this.ehBeneficiario = ehBeneficiario;
     }
 
     public EnderecoDTO getEndereco() {
