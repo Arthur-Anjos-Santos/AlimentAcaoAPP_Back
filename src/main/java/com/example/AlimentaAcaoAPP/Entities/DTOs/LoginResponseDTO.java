@@ -1,4 +1,4 @@
 package com.example.AlimentaAcaoAPP.Entities.DTOs;
 
-public record LoginResponseDTO(String token, Integer id  ) {
+public record LoginResponseDTO(String token, Integer id) {
 }

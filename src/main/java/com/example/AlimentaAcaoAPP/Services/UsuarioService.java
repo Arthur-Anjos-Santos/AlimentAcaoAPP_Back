@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -54,15 +56,22 @@ public class UsuarioService {
         repository.save(pessoa);
     }
 
-    public void atualizaRenda(Integer idUsuario, RendaDTO renda) {
-        Optional<Pessoa> pessoa = repository.findById(idUsuario);
-        pessoa.get().setQuantidadePessoas(renda.quantidadePessoas());
-        pessoa.get().setValorRendaPercapita(renda.valorRendaPercapita());
-        repository.save(pessoa.get());
+    public void atualizarRendaERedefinirBeneficio(Integer idUsuario, BigDecimal rendaPerCapita, boolean ehBeneficiario, int quantidadePessoas) {
+        Optional<Pessoa> optionalPessoa = repository.findById(idUsuario);
+        if (optionalPessoa.isEmpty()) {
+            throw new RuntimeException("Usuário não encontradsssso.");
+        }
+
+        Pessoa pessoa = optionalPessoa.get();
+        pessoa.setQuantidadePessoas(quantidadePessoas);
+        pessoa.setValorRendaPercapita(rendaPerCapita);
+        pessoa.setEhBeneficiario(ehBeneficiario);
+
+        repository.save(pessoa);
     }
 
     public Integer findByIdUsuario(String email) {
         Optional<Pessoa> usuario =  repository.findByEmail(email);
-        return  usuario.get().getUsuario().getId();
+        return usuario.get().getUsuario().getId();
     }
 }

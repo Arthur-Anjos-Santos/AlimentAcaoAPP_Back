@@ -18,6 +18,8 @@ public class Pessoa extends Usuario {
     @Column (length = 120)
 
     private BigDecimal valorRendaPercapita;
+    private Double rendaTotal;
+    private Boolean ehBeneficiario;
 
     @ManyToOne
     @JoinColumn(name = "endereco_id", referencedColumnName = "id", nullable = false)
@@ -26,8 +28,7 @@ public class Pessoa extends Usuario {
 
     public Pessoa(UsuarioDTO usuario, PessoaDTO pessoaDTO) {
         super(usuario);
-        this.quantidadePessoas = pessoaDTO.getQuantidadePessoas();
-        this.valorRendaPercapita = pessoaDTO.getValorRendaPercapita();
+        this.rendaTotal = pessoaDTO.getRendaTotal();
         this.endereco = new Endereco(pessoaDTO.getEndereco());
     }
 
@@ -48,6 +49,22 @@ public class Pessoa extends Usuario {
 
     public BigDecimal getValorRendaPercapita() {
         return valorRendaPercapita;
+    }
+
+    public Double getRendaTotal() {
+        return rendaTotal;
+    }
+
+    public void setRendaTotal(Double rendaTotal) {
+        this.rendaTotal = rendaTotal;
+    }
+
+    public Boolean getEhBeneficiario() {
+        return ehBeneficiario;
+    }
+
+    public void setEhBeneficiario(Boolean ehBeneficiario) {
+        this.ehBeneficiario = ehBeneficiario;
     }
 
     public void setValorRendaPercapita(BigDecimal valorRendaPercapita) {
