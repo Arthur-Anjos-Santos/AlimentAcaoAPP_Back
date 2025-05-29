@@ -4,5 +4,6 @@ import java.math.BigDecimal;
 
 public record ResultadoBeneficioDTO(
     BigDecimal rendaPerCapita,
-    boolean ehBeneficiario
+    boolean ehBeneficiario,
+    String qrCode
 ) {}
