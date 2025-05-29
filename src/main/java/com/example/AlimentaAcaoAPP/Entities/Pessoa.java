@@ -25,6 +25,8 @@ public class Pessoa extends Usuario {
     @JoinColumn(name = "endereco_id", referencedColumnName = "id", nullable = false)
     private Endereco endereco;
 
+    @Column(length = 100000)
+    private String qrCodeBase64;
 
     public Pessoa(UsuarioDTO usuario, PessoaDTO pessoaDTO) {
         super(usuario);
@@ -37,6 +39,14 @@ public class Pessoa extends Usuario {
 
     public Pessoa() {
 
+    }
+
+    public String getQrCodeBase64() {
+        return qrCodeBase64;
+    }
+
+    public void setQrCodeBase64(String qrCodeBase64) {
+        this.qrCodeBase64 = qrCodeBase64;
     }
 
     public Integer getQuantidadePessoas() {

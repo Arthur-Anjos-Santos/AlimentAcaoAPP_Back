@@ -1,25 +1,18 @@
 package com.example.AlimentaAcaoAPP.Services;
 
 import com.example.AlimentaAcaoAPP.Entities.DTOs.PessoaDTO;
-import com.example.AlimentaAcaoAPP.Entities.DTOs.RendaDTO;
 import com.example.AlimentaAcaoAPP.Entities.Endereco;
 import com.example.AlimentaAcaoAPP.Entities.Pessoa;
-import com.example.AlimentaAcaoAPP.Entities.Usuario;
-import com.example.AlimentaAcaoAPP.Entities.DTOs.UsuarioDTO;
 import com.example.AlimentaAcaoAPP.Repository.EnderecoRepository;
 import com.example.AlimentaAcaoAPP.Repository.PessoaRepository;
-import com.example.AlimentaAcaoAPP.Repository.UsuarioRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
 @Service
 public class UsuarioService {
 
@@ -67,7 +60,6 @@ public class UsuarioService {
         pessoa.setValorRendaPercapita(rendaPerCapita);
         pessoa.setEhBeneficiario(ehBeneficiario);
         pessoa.setRendaTotal(rendaTotal);
-        
 
         repository.save(pessoa);
     }

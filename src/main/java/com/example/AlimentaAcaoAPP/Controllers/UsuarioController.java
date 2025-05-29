@@ -4,6 +4,7 @@ import com.example.AlimentaAcaoAPP.Entities.DTOs.PessoaDTO;
 import com.example.AlimentaAcaoAPP.Entities.DTOs.RendaDTO;
 import com.example.AlimentaAcaoAPP.Entities.DTOs.ResultadoBeneficioDTO;
 import com.example.AlimentaAcaoAPP.Services.DoacaoService;
+import com.example.AlimentaAcaoAPP.Services.QrCodeService;
 import com.example.AlimentaAcaoAPP.Services.UsuarioService;
 
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +24,9 @@ public class UsuarioController {
 
     @Autowired
     private UsuarioService usuarioService;
+
+    @Autowired
+    private QrCodeService qrCodeService;
 
     @Autowired
     private DoacaoService doacaoService;
@@ -55,9 +59,12 @@ public class UsuarioController {
                 rendaDTO.valorRendaTotal()
         );
 
+        String qrCodeBase64 = qrCodeService.obterQrCode(id, resultado.isBeneficiario());
+
         ResultadoBeneficioDTO responseDTO = new ResultadoBeneficioDTO(
                 resultado.getRendaPerCapita(),
-                resultado.isBeneficiario()
+                resultado.isBeneficiario(),
+                qrCodeBase64
         );
 
         return ResponseEntity.ok(responseDTO);
