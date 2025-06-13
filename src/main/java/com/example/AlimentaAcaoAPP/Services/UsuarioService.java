@@ -68,4 +68,9 @@ public class UsuarioService {
         Optional<Pessoa> usuario =  repository.findByEmail(email);
         return usuario.get().getUsuario().getId();
     }
+
+    public Pessoa buscarPorId(Integer id) {
+        return repository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Pessoa não encontrada com ID: " + id));
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.AlimentaAcaoAPP.Infra.Security;
 
 import com.example.AlimentaAcaoAPP.Entities.Pessoa;
+import com.example.AlimentaAcaoAPP.Entities.Usuario;
 import com.example.AlimentaAcaoAPP.Repository.UsuarioRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -35,7 +36,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
             if (login != null) {
                 // Tenta recuperar o usuário
-                Optional<Pessoa> user = usuarioRepository.findByEmail(login);
+                Optional<Usuario> user = usuarioRepository.findByEmail(login);
 
                 if (user.isPresent()) {
                     // Se o usuário for encontrado, cria a autenticação
