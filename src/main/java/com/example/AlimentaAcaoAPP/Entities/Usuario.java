@@ -120,8 +120,8 @@ public abstract class Usuario implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         if (this.tipoUsuario == TipoUsuario.ADMIN) return List.of(new SimpleGrantedAuthority("ROLE_ADMIN"),
-                new SimpleGrantedAuthority("ROLE_BENEFICIARIO"));
-        else return List.of(new SimpleGrantedAuthority("ROLE_BENEFICIARIO"));
+                new SimpleGrantedAuthority("ROLE_USUARIO"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USUARIO"));
     }
 
     @Override

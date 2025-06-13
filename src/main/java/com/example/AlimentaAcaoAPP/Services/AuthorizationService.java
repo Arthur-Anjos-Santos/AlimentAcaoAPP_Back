@@ -1,6 +1,7 @@
 package com.example.AlimentaAcaoAPP.Services;
 
 import com.example.AlimentaAcaoAPP.Entities.Pessoa;
+import com.example.AlimentaAcaoAPP.Entities.Usuario;
 import com.example.AlimentaAcaoAPP.Repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,8 +19,8 @@ public class AuthorizationService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<Pessoa> userOptional = repository.findByEmail(username);
-        Pessoa user = userOptional.orElseThrow(() ->
+        Optional<Usuario> userOptional = repository.findByEmail(username);
+        Usuario user = userOptional.orElseThrow(() ->
                 new UsernameNotFoundException("Usuário não encontrado com o email: " + username)
         );
 

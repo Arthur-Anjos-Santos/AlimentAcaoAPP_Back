@@ -3,7 +3,7 @@ package com.example.AlimentaAcaoAPP.Entities.Enums;
 public enum TipoUsuario {
 
     ADMIN("admin"),
-    BENEFICIARIO("beneficiario");
+    USUARIO("usuario");
 
     private final String tipoUsuario;
 

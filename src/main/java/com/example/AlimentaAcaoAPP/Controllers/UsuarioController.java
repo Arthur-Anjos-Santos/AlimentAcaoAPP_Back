@@ -31,7 +31,7 @@ public class UsuarioController {
     @Autowired
     private DoacaoService doacaoService;
 
-    @PreAuthorize("hasAnyRole('ADMIN','BENEFICIARIO')")
+    @PreAuthorize("hasAnyRole('ADMIN','USUARIO')")
     @GetMapping
     public ResponseEntity<List<PessoaDTO>> listaTodosUsuarios() {
         return ResponseEntity.status(HttpStatus.OK).body(usuarioService.listaUsuarios());
@@ -43,7 +43,7 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.CREATED).body("Usuário criado com sucesso!");
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN','BENEFICIARIO')")
+    @PreAuthorize("hasAnyRole('ADMIN','USUARIO')")
     @PutMapping("/{id}")
     public ResponseEntity<ResultadoBeneficioDTO> cadastrarRendaTotal(
             @PathVariable Integer id,
