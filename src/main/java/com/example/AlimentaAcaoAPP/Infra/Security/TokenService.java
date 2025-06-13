@@ -21,20 +21,21 @@ public class TokenService {
     private String secret;
 
     public String generateToken(Usuario usuario) {
-        try {
-            Algorithm algorithm = Algorithm.HMAC256(secret);
-            return JWT.create().withIssuer("auth-api")
-                    .withSubject(usuario.getEmail())
-                    .withClaim("tipoUsuario", usuario.getAuthorities().stream()
-                            .map(GrantedAuthority::getAuthority)
-                            .collect(Collectors.toList()))  // Adiciona os roles ao token
-                    .withExpiresAt(genExirationDate())
-                    .sign(algorithm);
-
-        } catch (JWTCreationException exception) {
-            throw new RuntimeException("Error while generate token ", exception);
-        }
+    try {
+        Algorithm algorithm = Algorithm.HMAC256(secret);
+        return JWT.create()
+                .withIssuer("auth-api")
+                .withSubject(usuario.getEmail())
+                .withClaim("authorities", usuario.getAuthorities().stream()
+                        .map(GrantedAuthority::getAuthority)
+                        .collect(Collectors.toList())) // <- Nome correto da claim
+                .withExpiresAt(genExirationDate())
+                .sign(algorithm);
+    } catch (JWTCreationException exception) {
+        throw new RuntimeException("Erro ao gerar token", exception);
     }
+}
+
 
     public String ValidateToken(String token) {
         try {
